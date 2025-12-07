@@ -1,4 +1,5 @@
-import { type Unit } from '@/data/conversionData';
+import { Link } from 'react-router-dom';
+import { type Unit, type Category } from '@/data/conversionData';
 import { cn } from '@/lib/utils';
 
 interface UnitListProps {
@@ -6,9 +7,10 @@ interface UnitListProps {
   selectedUnit: Unit;
   onSelectUnit: (unit: Unit) => void;
   label: string;
+  category?: Category;
 }
 
-export function UnitList({ units, selectedUnit, onSelectUnit, label }: UnitListProps) {
+export function UnitList({ units, selectedUnit, onSelectUnit, label, category }: UnitListProps) {
   return (
     <div className="flex-1 min-w-0">
       <label className="block text-sm font-medium text-muted-foreground mb-2">
