@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import { ArrowRightLeft, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
-import { type Unit, formatNumber } from '@/data/conversionData';
+import { type Unit, type Category, formatNumber } from '@/data/conversionData';
 import { cn } from '@/lib/utils';
 
 interface ConversionResultProps {
@@ -10,6 +11,7 @@ interface ConversionResultProps {
   toUnit: Unit;
   onSwap: () => void;
   onInputChange: (value: string) => void;
+  category?: Category;
 }
 
 export function ConversionResult({
@@ -19,6 +21,7 @@ export function ConversionResult({
   toUnit,
   onSwap,
   onInputChange,
+  category,
 }: ConversionResultProps) {
   const [copied, setCopied] = useState(false);
 
@@ -104,14 +107,22 @@ export function ConversionResult({
         </div>
       </div>
 
-      {/* Formula */}
+      {/* Formula & Link */}
       {inputValue && (
-        <div className="mt-4 pt-4 border-t border-border">
-          <p className="text-sm text-muted-foreground text-center">
+        <div className="mt-4 pt-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-sm text-muted-foreground">
             <span className="font-medium text-foreground">{inputValue} {fromUnit.symbol}</span>
             {' = '}
             <span className="font-medium text-primary">{formatNumber(result)} {toUnit.symbol}</span>
           </p>
+          {category && (
+            <Link
+              to={`/${category}/${fromUnit.id}-to-${toUnit.id}`}
+              className="text-sm text-primary hover:underline"
+            >
+              View detailed conversion →
+            </Link>
+          )}
         </div>
       )}
     </div>

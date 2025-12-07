@@ -1,15 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import { commonConversions, units, type Category } from '@/data/conversionData';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface CommonConversionsProps {
-  onSelect: (category: Category, fromId: string, toId: string) => void;
-}
+export function CommonConversions() {
+  const navigate = useNavigate();
 
-export function CommonConversions({ onSelect }: CommonConversionsProps) {
   const getUnitName = (category: Category, unitId: string) => {
     const unit = units[category].find((u) => u.id === unitId);
     return unit?.symbol || unitId;
+  };
+
+  const handleClick = (category: Category, fromId: string, toId: string) => {
+    navigate(`/${category}/${fromId}-to-${toId}`);
   };
 
   return (
@@ -21,7 +24,7 @@ export function CommonConversions({ onSelect }: CommonConversionsProps) {
         {commonConversions.map((conv, index) => (
           <button
             key={`${conv.from}-${conv.to}-${index}`}
-            onClick={() => onSelect(conv.category, conv.from, conv.to)}
+            onClick={() => handleClick(conv.category, conv.from, conv.to)}
             className={cn(
               'flex items-center gap-2 px-3 py-2 rounded-md text-sm',
               'bg-card border border-border shadow-soft',
