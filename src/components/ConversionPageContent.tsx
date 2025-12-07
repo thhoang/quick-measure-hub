@@ -3,6 +3,7 @@ import { ArrowRightLeft, Copy, Check } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import { type Unit, type Category, formatNumber, convert, generateConversionTable, getConversionFactor, units } from '@/data/conversionData';
 import { cn } from '@/lib/utils';
+import { ConvertToOtherUnits } from './ConvertToOtherUnits';
 
 interface ConversionPageContentProps {
   category: Category;
@@ -57,9 +58,9 @@ export function ConversionPageContent({ category, fromUnit, toUnit }: Conversion
         <h1 className="text-3xl font-bold text-foreground mb-2">
           Convert {fromUnit.name} to {toUnit.name}
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-foreground/80 font-medium">
           Please provide values below to convert {fromUnit.name.toLowerCase()} [{fromUnit.symbol}] to {toUnit.name.toLowerCase()} [{toUnit.symbol}], or{' '}
-          <Link to={`/${category}/${toUnit.id}-to-${fromUnit.id}`} className="text-primary hover:underline italic">
+          <Link to={`/${category}/${toUnit.id}-to-${fromUnit.id}`} className="text-primary hover:underline font-semibold">
             vice versa
           </Link>.
         </p>
@@ -131,39 +132,39 @@ export function ConversionPageContent({ category, fromUnit, toUnit }: Conversion
       {/* Unit Definitions */}
       {fromUnit.definition && (
         <section>
-          <h2 className="text-2xl font-semibold text-primary mb-4">{fromUnit.name}</h2>
-          <div className="space-y-4 text-foreground">
-            <p><strong>Definition:</strong> {fromUnit.definition}</p>
-            {fromUnit.history && <p><strong>History/origin:</strong> {fromUnit.history}</p>}
-            {fromUnit.currentUse && <p><strong>Current use:</strong> {fromUnit.currentUse}</p>}
+          <h2 className="text-2xl font-bold text-primary mb-4">{fromUnit.name}</h2>
+          <div className="space-y-4 text-foreground/90">
+            <p className="font-medium"><strong className="font-bold">Definition:</strong> {fromUnit.definition}</p>
+            {fromUnit.history && <p className="font-medium"><strong className="font-bold">History/origin:</strong> {fromUnit.history}</p>}
+            {fromUnit.currentUse && <p className="font-medium"><strong className="font-bold">Current use:</strong> {fromUnit.currentUse}</p>}
           </div>
         </section>
       )}
 
       {toUnit.definition && (
         <section>
-          <h2 className="text-2xl font-semibold text-primary mb-4">{toUnit.name}</h2>
-          <div className="space-y-4 text-foreground">
-            <p><strong>Definition:</strong> {toUnit.definition}</p>
-            {toUnit.history && <p><strong>History/origin:</strong> {toUnit.history}</p>}
-            {toUnit.currentUse && <p><strong>Current use:</strong> {toUnit.currentUse}</p>}
+          <h2 className="text-2xl font-bold text-primary mb-4">{toUnit.name}</h2>
+          <div className="space-y-4 text-foreground/90">
+            <p className="font-medium"><strong className="font-bold">Definition:</strong> {toUnit.definition}</p>
+            {toUnit.history && <p className="font-medium"><strong className="font-bold">History/origin:</strong> {toUnit.history}</p>}
+            {toUnit.currentUse && <p className="font-medium"><strong className="font-bold">Current use:</strong> {toUnit.currentUse}</p>}
           </div>
         </section>
       )}
 
       {/* Conversion Table */}
       <section>
-        <h2 className="text-2xl font-semibold text-primary mb-4">
+        <h2 className="text-2xl font-bold text-primary mb-4">
           {fromUnit.name} to {toUnit.name} Conversion Table
         </h2>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse bg-card rounded-lg overflow-hidden shadow-soft">
             <thead>
               <tr className="bg-muted">
-                <th className="px-4 py-3 text-left font-semibold text-foreground border-b border-border">
+                <th className="px-4 py-3 text-left font-bold text-foreground border-b border-border">
                   {fromUnit.name} [{fromUnit.symbol}]
                 </th>
-                <th className="px-4 py-3 text-left font-semibold text-foreground border-b border-border">
+                <th className="px-4 py-3 text-left font-bold text-foreground border-b border-border">
                   {toUnit.name} [{toUnit.symbol}]
                 </th>
               </tr>
@@ -171,10 +172,10 @@ export function ConversionPageContent({ category, fromUnit, toUnit }: Conversion
             <tbody>
               {conversionTable.map((row, index) => (
                 <tr key={index} className="hover:bg-list-hover transition-colors">
-                  <td className="px-4 py-2 border-b border-border text-foreground">
+                  <td className="px-4 py-2 border-b border-border text-foreground font-medium">
                     {row.from} {fromUnit.symbol}
                   </td>
-                  <td className="px-4 py-2 border-b border-border text-foreground">
+                  <td className="px-4 py-2 border-b border-border text-foreground font-medium">
                     {row.to} {toUnit.symbol}
                   </td>
                 </tr>
@@ -186,28 +187,34 @@ export function ConversionPageContent({ category, fromUnit, toUnit }: Conversion
 
       {/* How to Convert */}
       <section>
-        <h2 className="text-2xl font-semibold text-primary mb-4">
+        <h2 className="text-2xl font-bold text-primary mb-4">
           How to Convert {fromUnit.name} to {toUnit.name}
         </h2>
         <div className="bg-card rounded-lg border border-border p-6 space-y-4">
-          <p className="text-foreground">
+          <p className="text-foreground font-semibold">
             1 {fromUnit.symbol} = {conversionFactor} {toUnit.symbol}
           </p>
-          <p className="text-foreground">
+          <p className="text-foreground font-semibold">
             1 {toUnit.symbol} = {reverseConversionFactor} {fromUnit.symbol}
           </p>
           <div className="pt-4 border-t border-border">
-            <p className="text-muted-foreground"><strong>Example:</strong> convert 15 {fromUnit.symbol} to {toUnit.symbol}:</p>
-            <p className="text-foreground mt-2">
+            <p className="text-foreground/80 font-medium"><strong className="font-bold">Example:</strong> convert 15 {fromUnit.symbol} to {toUnit.symbol}:</p>
+            <p className="text-foreground font-semibold mt-2">
               15 {fromUnit.symbol} = 15 × {conversionFactor} {toUnit.symbol} = {formatNumber(convert(15, fromUnit, toUnit))} {toUnit.symbol}
             </p>
           </div>
         </div>
       </section>
 
+      {/* Convert to Other Units - From Unit */}
+      <ConvertToOtherUnits category={category} fromUnit={fromUnit} excludeUnit={toUnit} />
+
+      {/* Convert to Other Units - To Unit */}
+      <ConvertToOtherUnits category={category} fromUnit={toUnit} excludeUnit={fromUnit} />
+
       {/* Related Conversions */}
       <section>
-        <h2 className="text-2xl font-semibold text-primary mb-4">
+        <h2 className="text-2xl font-bold text-primary mb-4">
           Popular {category.charAt(0).toUpperCase() + category.slice(1)} Conversions
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -216,12 +223,13 @@ export function ConversionPageContent({ category, fromUnit, toUnit }: Conversion
               key={index}
               to={`/${category}/${conv.from.id}-to-${conv.to.id}`}
               className={cn(
-                'flex items-center gap-2 px-3 py-2 rounded-md text-sm',
+                'flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium',
                 'bg-card border border-border shadow-soft',
                 'hover:bg-secondary hover:border-primary/30',
                 'transition-all duration-200',
                 'text-primary hover:text-foreground'
               )}
+              title={`Convert ${conv.from.name} to ${conv.to.name}`}
             >
               {conv.from.symbol} to {conv.to.symbol}
             </Link>
