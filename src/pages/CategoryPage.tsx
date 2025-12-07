@@ -1,12 +1,15 @@
 import { useParams, Navigate, Link } from 'react-router-dom';
+import { memo } from 'react';
 import { Header } from '@/components/Header';
 import { Sidebar } from '@/components/Sidebar';
 import { UnitConverter } from '@/components/UnitConverter';
 import { PopularConversions } from '@/components/PopularConversions';
 import { CompleteUnitList } from '@/components/CompleteUnitList';
+import { SEOHead, getCategorySEO } from '@/components/SEOHead';
+import { SchemaMarkup } from '@/components/SchemaMarkup';
 import { units, categories, type Category } from '@/data/conversionData';
 
-const CategoryPage = () => {
+const CategoryPage = memo(() => {
   const { category } = useParams<{ category: string }>();
 
   if (!category) {
@@ -20,14 +23,18 @@ const CategoryPage = () => {
     return <Navigate to="/" replace />;
   }
 
+  const seo = getCategorySEO(category as Category);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead {...seo} />
+      <SchemaMarkup type="category" category={category as Category} />
       <Header />
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           <main className="flex-1 min-w-0">
             {/* Breadcrumb */}
-            <nav className="text-sm font-medium text-foreground/70 mb-4">
+            <nav className="text-sm font-medium text-foreground/70 mb-4" aria-label="Breadcrumb">
               <Link to="/" className="hover:text-primary">Home</Link>
               {' / '}
               <span className="text-foreground font-semibold capitalize">{category} Conversion</span>
@@ -51,6 +58,8 @@ const CategoryPage = () => {
       </div>
     </div>
   );
-};
+});
+
+CategoryPage.displayName = 'CategoryPage';
 
 export default CategoryPage;
