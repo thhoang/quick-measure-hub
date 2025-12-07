@@ -81,3 +81,32 @@
     "vite": "^5.4.19"
   }
 }
+{
+  "name": "quick-measure-hub",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "postbuild": "react-snap"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "react-snap": "^1.23.0"
+  },
+  "reactSnap": {
+    "include": [
+      "/",
+      "/length/kilometer-to-nanometer",
+      "/length/meter-to-centimeter",
+      "/weight/kilogram-to-gram",
+      "/temperature/celsius-to-fahrenheit"
+    ],
+    "minifyHtml": {
+      "collapseWhitespace": true,
+      "removeComments": true
+    }
+  }
+}
