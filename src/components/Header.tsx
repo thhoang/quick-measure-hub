@@ -8,7 +8,7 @@ export function Header() {
         <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
           <Calculator className="w-8 h-8" />
           <h1 className="text-2xl font-bold tracking-tight">
-            Unit<span className="font-semibold">Converter</span>
+            Fast<span className="font-semibold">Converters</span>
           </h1>
         </Link>
       </div>
